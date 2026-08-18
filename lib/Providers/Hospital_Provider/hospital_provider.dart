@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:inneed_practice/Models/hospital_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class HospitalProvider extends ChangeNotifier {
   Position? _currentPosition;
@@ -14,8 +15,7 @@ class HospitalProvider extends ChangeNotifier {
   List<HospitalModel> _hospitals = [];
 
   // Google API Key
-  final String _googleApiKey = "YOUR_API_KEY_HERE";
-
+  final String _googleApiKey = dotenv.env['GOOGLE_MAPS_API_KEY'] ?? '';
   //getters
   Position? get currentPosition => _currentPosition;
   bool get isLoading => _isLoading;

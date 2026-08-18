@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // <-- 1. Yeh import add karein
 import 'package:inneed_practice/Providers/Emergency_contact/emergency_provider.dart';
 import 'package:inneed_practice/Providers/FirstAid_provider/first_aid_provider.dart';
 import 'package:inneed_practice/Providers/Hospital_Provider/hospital_provider.dart';
@@ -18,6 +19,13 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // 2. Dotenv load karein taake app start hone se pehle keys read ho sakein
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    print("Dotenv load error: $e");
+  }
 
   // Firebase initialize
   await Firebase.initializeApp();

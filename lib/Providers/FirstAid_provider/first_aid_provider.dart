@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:inneed_practice/Models/chat_message_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 class FirstAidProvider extends ChangeNotifier{
   //message list and loading status
   final List<chatMessage> _messages = [];
   bool _isLoading = false;
   List<chatMessage> get messages => _messages;
   bool get isLoading => _isLoading;
-  static const String _apiKey = 'YOUR_API_KEY_HERE';
+  final String _apiKey = dotenv.env['OPENROUTER_API_KEY'] ?? '';
 
   //for sending messages and getting response from ai
   Future<void> sendMessage(String userPrompt) async {
