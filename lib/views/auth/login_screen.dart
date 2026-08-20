@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _isPasswordObscure = true;
   bool _isLoading = false;
-  final AuthService _authService = AuthService(); // Service Instance
+  final AuthService _authService = AuthService();
 
   // Login Logic Function with Custom Snackbar Integration
   void _handleLogin() async {
@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
       AppSnackbar.show(
         context,
         message: 'Please enter both email and password',
-        isSuccess: false, // Error ke liye false (red style)
+        isSuccess: false,
       );
       return;
     }
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
         AppSnackbar.show(
           context,
           message: 'Logged in successfully!',
-          isSuccess: true, // Success ke liye true (green style)
+          isSuccess: true,
         );
 
         // Push to MainScreen and remove previous routes
@@ -198,9 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {
-                    // Forgot password action
-                  },
+                  onPressed: () {},
                   child: const Text(
                     'Forgot Password?',
                     style: TextStyle(
@@ -251,9 +249,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 height: 52,
                 child: OutlinedButton(
-                  onPressed: () {
-                    // Google Sign-in action
-                  },
+                  onPressed: () {},
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(color: Colors.grey.shade300),
                     shape: RoundedRectangleBorder(
@@ -342,6 +338,9 @@ class _LoginScreenState extends State<LoginScreen> {
         fillColor: const Color(0xFFF5F5F7),
         contentPadding: const EdgeInsets.symmetric(vertical: 16),
         border: OutlineInputBorder(
+
+
+
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
@@ -349,3 +348,5 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+

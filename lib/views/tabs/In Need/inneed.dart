@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../../../Models/emergency_type_model.dart';
 import '../../alert_popup/sos_alert.dart';
@@ -16,7 +17,12 @@ class inNeedTab extends StatefulWidget {
   State<inNeedTab> createState() => _inNeedTabState();
 }
 
-class _inNeedTabState extends State<inNeedTab> {
+// 1. Add AutomaticKeepAliveClientMixin to preserve state across tab switches
+class _inNeedTabState extends State<inNeedTab> with AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true; // Yeh tab change hone par state ko reset nahi hone dega
+
   late EmergencyItem selectedEmergency;
   final List<EmergencyItem> emergencyTypes = [
     EmergencyItem(
@@ -181,7 +187,6 @@ class _inNeedTabState extends State<inNeedTab> {
       // fetching real users from firebase
       if (user != null) {
         try {
-          //  Direct doc(user.uid)
           DocumentSnapshot userDoc = await FirebaseFirestore.instance
               .collection('users')
               .doc(user.uid)
@@ -192,7 +197,6 @@ class _inNeedTabState extends State<inNeedTab> {
             senderName = data['name'] ?? data['fullName'] ?? senderName;
             senderPhone = data['phone'] ?? data['phoneNumber'] ?? senderPhone;
           } else {
-            // if could not find doc ID UID, then do query and find it
             QuerySnapshot querySnapshot = await FirebaseFirestore.instance
                 .collection('users')
                 .where('uid', isEqualTo: user.uid)
@@ -210,7 +214,7 @@ class _inNeedTabState extends State<inNeedTab> {
         }
       }
 
-      // send data to firestore within 8 sec then time out, so app wont be freezed
+      // send data to firestore within 8 sec then time out
       await FirebaseFirestore.instance.collection('sos_alerts').add({
         'senderId': user?.uid ?? '',
         'senderName': senderName,
@@ -222,19 +226,49 @@ class _inNeedTabState extends State<inNeedTab> {
         'status': 'active',
       }).timeout(const Duration(seconds: 8));
 
+      // Local Notification Trigger
+      FlutterLocalNotificationsPlugin localNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+      const AndroidInitializationSettings androidInitSettings =
+      AndroidInitializationSettings('@drawable/launch_background');
+
+      const InitializationSettings initSettings = InitializationSettings(
+        android: androidInitSettings,
+      );
+
+      await localNotificationsPlugin.initialize(initSettings);
+
+      const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+        'sos_channel_id',
+        'SOS Emergency Alerts',
+        channelDescription: 'High priority emergency notifications',
+        importance: Importance.max,
+        priority: Priority.high,
+        playSound: true,
+      );
+
+      const NotificationDetails platformDetails = NotificationDetails(
+        android: androidDetails,
+      );
+
+      await localNotificationsPlugin.show(
+        DateTime.now().millisecond,
+        "🚨 EMERGENCY SOS ALERT!",
+        "$senderName needs help: ${selectedEmergency.title}",
+        platformDetails,
+      );
+
       if (mounted) {
         Navigator.of(context, rootNavigator: true).pop();
       }
 
-      // Success Message & Test Popup
+      // Success Message
       if (mounted) {
         AppSnackbar.show(
           context,
           message: "Alert sent successfully!",
           isSuccess: true,
         );
-
-
       }
     } catch (e) {
       if (mounted) {
@@ -253,6 +287,7 @@ class _inNeedTabState extends State<inNeedTab> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(

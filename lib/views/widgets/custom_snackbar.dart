@@ -4,16 +4,14 @@ class AppSnackbar {
   static void show(
       BuildContext context, {
         required String message,
-        bool isSuccess = true, // True matlab success (green/tick), False matlab error (red/cross)
+        bool isSuccess = true,
       }) {
-    // Purana snackbar foran hata kar naya show karega
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
           children: [
-            // Status ke mutabiq icon aur uska background circle
             Container(
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
@@ -29,7 +27,7 @@ class AppSnackbar {
               ),
             ),
             const SizedBox(width: 12),
-            // Message text jo lamba hone par automatically wrap ho jaye ga
+            //message wrap if get long
             Expanded(
               child: Text(
                 message,
@@ -42,7 +40,7 @@ class AppSnackbar {
             ),
           ],
         ),
-        backgroundColor: Colors.white, // Screenshots jaisa clean white look
+        backgroundColor: Colors.white,
         behavior: SnackBarBehavior.floating,
         elevation: 4,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),

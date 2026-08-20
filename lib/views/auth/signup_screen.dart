@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inneed_practice/views/widgets/custom_snackbar.dart';
 import 'auth_service/auth_service.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -27,7 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       AppSnackbar.show(
         context,
         message: 'Please fill all fields',
-        isSuccess: false, // error red
+        isSuccess: false,
       );
       return;
     }
@@ -59,7 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         AppSnackbar.show(
           context,
           message: 'Account Created Successfully!',
-          isSuccess: true, // success
+          isSuccess: true,
         );
         Navigator.pop(context);
       } else {
@@ -218,9 +219,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: double.infinity,
                 height: 52,
                 child: OutlinedButton(
-                  onPressed: () {
-                    // Google Sign-in action
-                  },
+                  onPressed: () {},
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(color: Colors.grey.shade300),
                     shape: RoundedRectangleBorder(

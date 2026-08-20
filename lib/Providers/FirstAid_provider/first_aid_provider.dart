@@ -42,7 +42,7 @@ class FirstAidProvider extends ChangeNotifier{
                   "2. ALWAYS start English section with: \"If someone needs help, follow these steps:\"\n"
                   "3. ALWAYS start Urdu section below with: \"Agar kisi ko madad ki zaroorat ho, to yeh tareeqay follow karein:\"\n"
                   "4. DO NOT use any asterisks (*), hashes (#), or bullet dashes (-). Use simple numbers (1., 2., 3.) only.\n"
-                  "5. Keep steps short, direct, and limited to 3 main points.\n"
+                  "5. Keep steps short, direct, and limited to 5 main points.\n"
                   "6. End with a short reminder to call 1122 for emergencies.\n\n"
                   "EXACT OUTPUT FORMAT TO FOLLOW FOR EVERY QUERY:\n\n"
                   "If someone is [condition], follow these steps:\n"
@@ -50,6 +50,8 @@ class FirstAidProvider extends ChangeNotifier{
                   "2. [Step 2 in English]\n"
                   "3. [Step 3 in English]\n"
                   "4. [Step 4 in English]\n"
+                  "5. [Step 5 in English]\n"
+
                   "Call 1122 immediately for severe emergencies.\n\n"
                   "Agar kisi ko [condition in Roman Urdu], to yeh tareeqay follow karein:\n"
 
@@ -57,6 +59,8 @@ class FirstAidProvider extends ChangeNotifier{
                   "2. [Step 2 in Roman Urdu]\n"
                   "3. [Step 3 in Roman Urdu]\n"
                   "4. [Step 4 in Roman Urdu]\n"
+                  "5. [Step 5 in Roman Urdu]\n"
+
                   "Zaroorat barhne par 1122 par call karein."
 
             },

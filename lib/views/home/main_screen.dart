@@ -28,7 +28,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void listenForSosAlerts() {
-    // note the exact time for app opening
     final DateTime appOpenTime = DateTime.now();
 
     FirebaseFirestore.instance
@@ -99,7 +98,6 @@ class _MainScreenState extends State<MainScreen> {
         child: Padding(
           padding: EdgeInsets.zero,
           child: Column(
-            //custom header
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,7 +111,6 @@ class _MainScreenState extends State<MainScreen> {
                           icon: const Icon(Icons.menu),
                         );
                       }),
-
                   Row(
                     children: [
                       Image.asset(
@@ -136,8 +133,8 @@ class _MainScreenState extends State<MainScreen> {
                   IconButton(
                     onPressed: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const NotificationsScreen()),
+                        context,
+                        MaterialPageRoute(builder: (context) => const NotificationsScreen()),
                       );
                     },
                     icon: const Icon(
@@ -164,9 +161,9 @@ class _MainScreenState extends State<MainScreen> {
                   borderRadius: BorderRadius.circular(8),
                   gradient: const LinearGradient(
                     colors: [
-                      Color(0xFF2962FF), // Primary Blue
-                      Color(0xFF8E24AA), // Purple
-                      Color(0xFFD32F2F), // Primary Red
+                      Color(0xFF2962FF),
+                      Color(0xFF8E24AA),
+                      Color(0xFFD32F2F),
                     ],
                   ),
                 ),
@@ -184,22 +181,18 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-
               Expanded(
                 child: DefaultTabController(
-
                   length: 4,
                   child: Column(
-
                     children: [
                       Container(
                         height: 45,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
                         ),
-                        //tabbar
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: TabBar(
                               overlayColor:
                               WidgetStateProperty.all(Colors.transparent),
@@ -209,7 +202,6 @@ class _MainScreenState extends State<MainScreen> {
                               isScrollable: true,
                               dividerColor: Colors.transparent,
                               indicator: BoxDecoration(
-
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(25),
                                 boxShadow: const [
@@ -256,7 +248,7 @@ class _MainScreenState extends State<MainScreen> {
                                 Tab(
                                   child: Row(
                                     children: [
-                                      Icon(Icons.add_box, size: 18),
+                                      Icon(Icons.local_hospital, size: 18),
                                       SizedBox(width: 6),
                                       Text('Hospital'),
                                     ],
@@ -265,20 +257,20 @@ class _MainScreenState extends State<MainScreen> {
                               ]),
                         ),
                       ),
-                      Expanded(
+                      const Expanded(
                         child: TabBarView(
                           children: [
-                            const EmergencyTab(),
-                            const inNeedTab(),
-                            const FirstAidTab(),
-                            const HospitalTab(),
+                            EmergencyTab(),
+                            inNeedTab(),
+                            FirstAidTab(),
+                            HospitalTab(),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
